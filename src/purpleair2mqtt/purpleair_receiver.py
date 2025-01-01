@@ -141,13 +141,11 @@ class PurpleAirReceiver(MqttEventProcessor):
         self.retrieve_latest_data(client)
         return self.config.refresh_interval_seconds
 
-
     def wants_json(self, _client:MqttConnectionClient, _topic:str):
         return False
     
     def clean_up(self, _client):
         pass
-
 
     # based on information from https://community.purpleair.com/t/sensor-json-documentation/6917
     purple_air_sensors = {
