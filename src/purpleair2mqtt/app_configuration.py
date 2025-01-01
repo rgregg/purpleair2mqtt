@@ -1,16 +1,16 @@
 # MIT License
 # Copyright (c) 2025 Ryan Gregg
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,10 @@
 
 """
 AppConfiguration module
-This module provides classes and functions to manage the configuration of an application that integrates with an MQTT broker, PurpleAir API, and other components. It includes support for loading configuration from a YAML file.
+This module provides classes and functions to manage the configuration of an application that
+integrates with an MQTT broker, PurpleAir API, and other components. It includes support for
+loading configuration from a YAML file.
+
 Classes:
     MqttConfiguration: Configuration for the MQTT broker.
     PurpleAirConfiguration: Configuration for the PurpleAir API.
@@ -57,16 +60,23 @@ class MqttConfiguration:
         self.sensor_topic_root = "sensors/purpleair2mqtt"
 
     def __repr__(self):
-        return f"Mqtt(host={self.host}, username={self.username}, password={self.password}, listen_topic={self.listen_topic}, alert_topic={self.status_topic}, sensor_topic_root={self.sensor_topic_root})"
+        return (
+            f"Mqtt(host={self.host}, username={self.username}, password={self.password}, "
+            f"listen_topic={self.listen_topic}, alert_topic={self.status_topic}, "
+            f"sensor_topic_root={self.sensor_topic_root})"
+        )
 
 class PurpleAirConfiguration:
     """Configuration for the PurpleAir API"""
     def __init__(self):
         self.urls = []
         self.refresh_interval_seconds = 300
-   
+
     def __repr__(self):
-        return f"PurpleAir(urls={self.urls}, refresh_interval_seconds={self.refresh_interval_seconds})"
+        return (
+            f"PurpleAir(urls={self.urls}, "
+            f"refresh_interval_seconds={self.refresh_interval_seconds})"
+        )
 
 class LoggingConfiguration:
     """Configuration for the logger"""
@@ -75,9 +85,12 @@ class LoggingConfiguration:
         self.path = None
         self.rotate = False
         self.max_keep = 10
-    
+
     def __repr__(self):
-        return f"Logging(level={self.level}, path={self.path}, rotate={self.rotate}, max_keep={self.max_keep})"
+        return (
+            f"Logging(level={self.level}, path={self.path}, "
+            f"rotate={self.rotate}, max_keep={self.max_keep})"
+        )
 
 class HomeAssistantConfiguration:
     """Configuration for Home Assistant integration"""
@@ -86,7 +99,10 @@ class HomeAssistantConfiguration:
         self.discovery_topic = "homeassistant"
 
     def __repr__(self):
-        return f"HomeAssistant(discovery_enabled={self.discovery_enabled}, discovery_topic={self.discovery_topic})"
+        return (
+            f"HomeAssistant(discovery_enabled={self.discovery_enabled}, "
+            f"discovery_topic={self.discovery_topic})"
+        )
 
 class AppConfig:
     """Configuration for the application"""
@@ -118,7 +134,7 @@ class AppConfig:
         if purple_air is not None:
             self.purple_air.urls = purple_air.get('urls') or []
             self.purple_air.refresh_interval_seconds = purple_air.get('refresh_interval_seconds') or 300
-    
+
     def load_mqtt_config(self, data):
         """Load saved configuration for the MQTT"""
         mqtt = data.get('mqtt')
@@ -137,9 +153,12 @@ class AppConfig:
         if home_assistant is not None:
             self.home_assistant.discovery_enabled = home_assistant.get('discovery_enabled') or False
             self.home_assistant.discovery_topic = home_assistant.get('discovery_topic') or "homeassistant"
-        
+
     def __repr__(self):
-        return (f"AppConfig(mqtt={self.mqtt}, logging={self.logging}, home_assistant={self.home_assistant}, purple_air={self.purple_air})")
+        return (
+            f"AppConfig(mqtt={self.mqtt}, logging={self.logging}, "
+            f"home_assistant={self.home_assistant}, purple_air={self.purple_air})"
+        )
 
 class FileBasedAppConfig(AppConfig):
     """App configuration that is loaded from a file"""

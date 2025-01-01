@@ -1,16 +1,16 @@
 # MIT License
 # Copyright (c) 2025 Ryan Gregg
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,10 +20,11 @@
 # SOFTWARE.
 
 """
-This module defines the MqttEventReceiver class, which is responsible for receiving and processing MQTT messages.
-It connects to an MQTT broker, subscribes to a specified topic, and processes incoming messages using the 
-FrigateEventProcessor class. The module also handles publishing messages to the MQTT broker and provides an 
-interactive command-line interface for managing ongoing events.
+This module defines the MqttEventReceiver class, which is responsible for receiving
+and processing MQTT messages. It connects to an MQTT broker, subscribes to a
+specified topic, and processes incoming messages using the FrigateEventProcessor 
+class. The module also handles publishing messages to the MQTT broker and provides
+an interactive command-line interface for managing ongoing events.
 Classes:
     MqttEventReceiver: A class that handles MQTT message reception, processing, and publishing.
 Functions:
@@ -68,6 +69,8 @@ class MqttConnectionClient:
         self.mqtt_client = None
         self.processor = processor
         self.status_topic = config.status_topic
+        
+        # Status values for online and offline modes
         self.ONLINE_STATUS = "online"
         self.OFFLINE_STATUS = "offline"
 
