@@ -11,19 +11,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Configure Docker Engine
+      uses: docker/setup-docker-action@v4
+      with:
+        daemon-config: |
+          {
+            "debug": true,
+            "features": {
+              "containerd-snapshotter": true
+            }
+          }        
+
     - uses: actions/checkout@v4
+    
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ vars.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag purpleair2mqtt:$(date +%s)
+    
     - name: Docker meta
       id: meta
       uses: docker/metadata-action@v5
       with:
         images: rgregg/purpleair2mqtt
+    
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
