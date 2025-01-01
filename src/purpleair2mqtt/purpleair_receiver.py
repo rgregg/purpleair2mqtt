@@ -106,8 +106,8 @@ class PurpleAirReceiver(MqttEventProcessor):
                         "identifiers": [
                             f"purpleair_{sensor_id}"
                         ],
-                        "manufacturer": "PurpleAir",
-                        "model": "PurpleAir Sensor",
+                        "manufacturer": "PurpleAir2MQTT",
+                        "model": "Purple Air Sensor",
                         "name": data.get("Geo"),
                         "sw_version": data.get("version")
                     }
@@ -202,7 +202,7 @@ class PurpleAirReceiver(MqttEventProcessor):
         "pm2.5_aqi_b": {
             "enabled_by_default": True,
             "state_class": "measurement",
-            "value_template": "{{ value_json.pm2.5_aqi_b }}",
+            "value_template": "{{ value_json[\"pm2.5_aqi_b\"] }}",
             "name": "PM2.5 AQI B"
         },
 
@@ -306,7 +306,7 @@ class PurpleAirReceiver(MqttEventProcessor):
         "pm2.5_aqi": {
             "enabled_by_default": True,
             "state_class": "measurement",
-            "value_template": "{{ value_json.pm2.5_aqi }}",
+            "value_template": "{{ value_json[\"pm2.5_aqi\"] }}",
             "name": "PM2.5 AQI A"
         },
 

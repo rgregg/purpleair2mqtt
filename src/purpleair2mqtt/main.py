@@ -21,9 +21,9 @@
 
 import logging
 import os
-
+from logging.handlers import RotatingFileHandler
 from .mqtt_event_receiver import MqttConnectionClient
-from .app_configuration import FileBasedAppConfig
+from .app_configuration import FileBasedAppConfig, LoggingConfiguration
 from .purpleair_receiver import PurpleAirReceiver
 
 logger = logging.getLogger(__name__)
@@ -38,12 +38,36 @@ def main():
     config = FileBasedAppConfig(path)
     logger.debug("Configuration: %s", config)
 
+    configure_logging(config.logging)
+
     # Create the Purple Air data receiver
     sensor_receiver = PurpleAirReceiver(config.purple_air, config.home_assistant)
 
     # Create the MQTT client and connect
     mqtt_client = MqttConnectionClient(config.mqtt, False, sensor_receiver)
     mqtt_client.connect_and_loop()
+
+def configure_logging(config:LoggingConfiguration):
+    """ Configure logging for the class """
+    level = logging.INFO
+    if config.level.upper() == "DEBUG":
+        level = logging.DEBUG
+    if config.level.upper() == "WARNING":
+        level = logging.WARNING
+
+    # enable logging
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)-15s %(name)-8s %(levelname)s: %(message)s",
+    )
+
+    if config.path is not None:
+        max_keep = config.max_keep or 10
+        handler = RotatingFileHandler(config.path, maxBytes=5*1024*1024, backupCount=max_keep)
+        handler.setLevel(level)
+        formatter = logging.Formatter("%(asctime)-15s %(name)-8s %(levelname)s: %(message)s")
+        handler.setFormatter(formatter)
+        logging.getLogger().addHandler(handler)
 
 if __name__ == '__main__':
     main()
