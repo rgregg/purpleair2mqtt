@@ -33,7 +33,7 @@ def main():
     """Entry point for app"""
 
     # Load configuration
-    path = os.getenv('CONFIG_FILE', './config.yaml')    
+    path = os.getenv('CONFIG_FILE', '/app/config/config.yaml')
     logger.info("Reading configuration from %s", path)
     config = FileBasedAppConfig(path)
     logger.debug("Configuration: %s", config)

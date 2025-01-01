@@ -11,9 +11,10 @@
             "module": "src.purpleair2mqtt.main",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
-            "justMyCode": false,
+            "justMyCode": true,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}/src"
+                "PYTHONPATH": "${workspaceFolder}/src",
+                "CONFIG_FILE": "${workspaceFolder}/config.yaml"
             },
         }
     ]
