@@ -114,7 +114,8 @@ class PurpleAirReceiver(MqttEventProcessor):
                     sensor["unique_id"] = f"purpleair_{sensor_id}_{key}"
                     sensor["state_topic"] = value_topic
 
-                    discovery_topic = f"{self.hass_config.discovery_topic}/sensor/purpleair2mqtt_{sensor_id}/{key}/config"
+                    entity_key = self.clean_key_name(key)
+                    discovery_topic = f"{self.hass_config.discovery_topic}/sensor/purpleair2mqtt_{sensor_id}/{entity_key}/config"
                     payload = json.dumps(sensor)
                     logger.debug("Publishing discovery for %s: %s", discovery_topic, payload)
                     mqtt_client.publish_message(discovery_topic, payload, retain=True)
@@ -124,6 +125,10 @@ class PurpleAirReceiver(MqttEventProcessor):
     def strip_seperators(self, value:str):
         """Strips out the separators from a string"""
         return value.replace(" ", "").replace(",", "").replace(":", "").replace("-", "")
+    
+    def clean_key_name(self, value:str):
+        """Removes invalid characters from HASS topic names"""
+        return value.replace(".", "_").replace(" ", "_").replace(",", "_").replace(":", "_").replace("-", "_")
 
 
     # Implement the abstract methods from the MqttEventProcessor
@@ -157,7 +162,7 @@ class PurpleAirReceiver(MqttEventProcessor):
             "unit_of_measurement": "AQI",
             "value_template": "{{ value_json.Adc }}",
             "name": "Air Quality Index",
-            "icon": ""
+            #"icon": ""
         },
         "current_temp_f": {
             "device_class": "temperature",
