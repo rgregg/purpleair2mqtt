@@ -1,0 +1,19 @@
+[project]
+name = "purpleair2mqtt"
+version = "0.1.0"
+description = "PurpleAir to MQTT bridge"
+authors = [
+    { name = "Ryan Gregg" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    # Add your dependencies here, or keep empty if requirements.txt is used
+]
+
+[project.scripts]
+purpleair2mqtt = "purpleair2mqtt.main:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
